@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: gacha_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: gacha_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-ppassword"]
+      interval: 10s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: gacha_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_USER: user
+      DB_PASS: password
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: gacha_db
+    volumes:
+      - ./backend:/app
+
+volumes:
+  db_data:
