@@ -1,4 +1,5 @@
 "use client";
+import { Pack } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 export default function GachaPackCard({ id, name, imageUrl }: Pack) {

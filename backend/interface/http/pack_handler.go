@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"gacha-backend/domain/pack"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,5 +31,19 @@ func NewPackHandler(r *gin.Engine, svc *pack.Service) {
 			return
 		}
 		c.JSON(http.StatusOK, pack)
+	})
+
+	r.GET("/api/packs/:id/items", func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
+			return
+		}
+		items, err := svc.GetPackItems(id)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, items)
 	})
 }

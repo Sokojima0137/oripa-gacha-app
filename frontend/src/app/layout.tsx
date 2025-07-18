@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import './globals.css';
+import Header from '@/components/Header';
 
 // 
 export const metadata = {
@@ -28,6 +29,7 @@ export const metadata = {
     images: [],
   },
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -35,7 +37,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main className="min-h-screen">
+          {children}
+        </main>
+      </body>
     </html>
   )
 }

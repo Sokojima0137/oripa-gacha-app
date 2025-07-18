@@ -35,3 +35,25 @@ func (r *PackRepository) FindByID(id int) (*pack.Pack, error) {
 	}
 	return &p, nil
 }
+
+func (r *PackRepository) FindItemsByPackID(packID int) ([]pack.Item, error) {
+	rows, err := r.DB.Query(`
+		SELECT i.id, i.name, i.image_url, i.description
+		FROM pack_item pi
+		JOIN item i ON pi.item_id = i.id
+		WHERE pi.pack_id = ? AND pi.is_deleted = FALSE
+	`, packID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var items []pack.Item
+	for rows.Next() {
+		var item pack.Item
+		if err := rows.Scan(&item.ID, &item.Name, &item.ImageURL, &item.Description); err == nil {
+			items = append(items, item)
+		}
+	}
+	return items, nil
+}

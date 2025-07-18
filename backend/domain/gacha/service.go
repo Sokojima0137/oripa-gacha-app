@@ -2,10 +2,10 @@ package gacha
 
 import (
 	"errors"
-	"math/rand"
-	"time"
 	"fmt"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 // 構造体の定義

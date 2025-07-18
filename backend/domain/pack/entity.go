@@ -7,3 +7,10 @@ type Pack struct {
 	Description string `json:"description"`
 	CreatedAt   string `json:"createdAt"`
 }
+
+type Item struct {
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	ImageURL    string `json:"imageUrl"`
+	Description string `json:"description"`
+}

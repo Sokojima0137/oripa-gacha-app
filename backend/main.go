@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
-	"fmt"
 
 	gachaDomain "gacha-backend/domain/gacha"
 	packDomain "gacha-backend/domain/pack"
